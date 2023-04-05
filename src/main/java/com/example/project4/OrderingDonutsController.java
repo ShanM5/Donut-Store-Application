@@ -14,6 +14,14 @@ import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 
+
+
+/*
+    use listView<String> as an index cause the listview is direcly correlated to the arraylist of data
+ */
+
+
+
 public class OrderingDonutsController{
     DonutOrder DonutOrder = new DonutOrder();
     @FXML private ComboBox chooseDonut;

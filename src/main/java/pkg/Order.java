@@ -15,7 +15,15 @@ public class Order {
     its formatted like: Coffee(1) Tall [mocha, vanilla]
     You gotta find the coffee based off this info and remove from orderItems
     You gotta be careful cause there can be multiple talls with different amounts and addins, etc.
+
+
+    ^^^^ MIGHT NOT MATTER ANYMORE, CONSIDER BELOW METHOD INSTEAD
      */
+
+
+    /*
+    use listView<String> as an index cause the listview is direcly correlated to the arraylist of data
+ */
 
     //SPLIT STRING INPUT FOR COFFEE******************* SO WE CAN PERFROM REMOVE**S**SD*SD*S*D*SD*SDASBDBASDBADBJWLKHDBAWJHKDBAJDBL
     private int orderNumber;
