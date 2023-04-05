@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,11 +12,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="394.0" prefWidth="547.0" style="-fx-background-color: #d0b59b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project4.OrderingDonutsController">
+<AnchorPane prefHeight="498.0" prefWidth="550.0" style="-fx-background-color: #d0b59b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project4.OrderingDonutsController">
    <children>
-      <ComboBox fx:id="chooseDonut" layoutX="62.0" layoutY="68.0" onAction="#changeSelectedDonutType" prefHeight="25.0" prefWidth="160.0" promptText="Select Donut Type..." />
-      <Label layoutX="68.0" layoutY="51.0" text="Donut Type:" />
-      <BorderPane layoutX="325.0" layoutY="60.0" prefHeight="147.0" prefWidth="208.0" style="-fx-background-color: #000000;">
+      <ComboBox fx:id="chooseDonut" layoutX="48.0" layoutY="97.0" prefHeight="25.0" prefWidth="185.0" promptText="Select Donut Type..." />
+      <Label layoutX="101.0" layoutY="70.0" text="Donut Type:" />
+      <BorderPane layoutX="317.0" layoutY="63.0" prefHeight="132.0" prefWidth="216.0" style="-fx-background-color: #000000;">
          <center>
             <ImageView fx:id="donutMenuImage" fitHeight="129.0" fitWidth="206.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
@@ -22,10 +25,18 @@
             </ImageView>
          </center>
       </BorderPane>
-      <Text layoutX="202.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Donut Menu" wrappingWidth="174.013671875">
+      <Text layoutX="197.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Donut Menu" wrappingWidth="174.013671875">
          <font>
             <Font size="27.0" />
          </font>
       </Text>
+      <ListView fx:id="donutListView" layoutX="34.0" layoutY="212.0" prefHeight="228.0" prefWidth="200.0" />
+      <ListView fx:id="donutTempOrder" layoutX="329.0" layoutY="211.0" prefHeight="228.0" prefWidth="200.0" />
+      <Button layoutX="268.0" layoutY="293.0" mnemonicParsing="false" onAction="#addToTempOrder" text="&gt;&gt;" />
+      <Button layoutX="268.0" layoutY="340.0" mnemonicParsing="false" onAction="#removeFromTempOrder" text="&lt;&lt;" />
+      <ComboBox fx:id="numberOfDonuts" layoutX="252.0" layoutY="237.0" prefHeight="25.0" prefWidth="65.0" />
+      <TextField fx:id="donutSubTotal" editable="false" layoutX="217.0" layoutY="459.0" prefHeight="25.0" prefWidth="135.0" />
+      <Label layoutX="154.0" layoutY="463.0" text="sub-total:" />
+      <Button layoutX="429.0" layoutY="459.0" mnemonicParsing="false" text="Add To Total" />
    </children>
 </AnchorPane>
