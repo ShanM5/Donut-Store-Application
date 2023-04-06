@@ -21,6 +21,7 @@ public class DonutOrder {
     public void removeDonut(Donut removeDonut){
         for(Donut d : donutOrder){
             if(d.flavorEquals(removeDonut)){
+
                 orderPrice -= d.itemPrice();
                 donutOrder.remove(d);
                 return;

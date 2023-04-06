@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import pkg.*;
+import java.util.ArrayList;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -119,11 +120,9 @@ public class OrderingCoffeeController {
     }
 
     @FXML public void addToOrder() throws IOException {
-        Coffee addCoffee = coffee;
 
-
-
-        mainViewController.addCoffee(addCoffee);
+        Coffee newCoffee = coffee;
+        mainViewController.addCoffee(coffee);
 
 
     }

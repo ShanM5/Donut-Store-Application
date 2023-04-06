@@ -150,7 +150,6 @@ public class OrderingDonutsController{
     @FXML public void addToBasket(){
         DonutOrder donutOrder = DonutOrder;
         mainViewController.addDonut(donutOrder);
-        System.out.println("donut addy: " + mainViewController);
     }
 
     public DonutOrder getDonutOrder(){

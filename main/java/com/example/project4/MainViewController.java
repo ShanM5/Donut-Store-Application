@@ -21,16 +21,31 @@ public class MainViewController {
     private Label welcomeText;
 
     Order order = new Order();
+    FXMLLoader loader;
+    private Parent rootForB;
+
+    OrderingBasketController orderingBasketController;
 
 
     @FXML
     public void initialize() throws IOException{
+        /*
         OrderingBasketController orderingBasketController = new OrderingBasketController();
+
+        loader = new FXMLLoader(getClass().getResource("OrderingBasketView.fxml"));
+        rootForB = loader.load();
+        orderingBasketController = loader.getController();
+
+
+         */
+
     }
 
     public void addCoffee(Coffee coffee){
 
-        order.addCoffee(coffee);
+        Coffee newCoffee = coffee;
+
+        order.addCoffee(newCoffee);
 
 
 
@@ -47,6 +62,7 @@ public class MainViewController {
     public Order getOrder(){
         return order;
     }
+
 
     @FXML
     protected void openDonutMenu() throws IOException {
@@ -82,6 +98,7 @@ public class MainViewController {
         Stage basketMenu = new Stage();
         basketMenu.setScene(new Scene(r));
         basketMenu.show();
+        orderingBasketController.setBasket();
 
     }
     @FXML

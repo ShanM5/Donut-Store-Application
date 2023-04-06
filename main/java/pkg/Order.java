@@ -2,8 +2,11 @@ package pkg;
 
 import javafx.scene.control.Menu;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-
 public class Order {
 
 
@@ -24,15 +27,19 @@ public class Order {
  */
 
     //SPLIT STRING INPUT FOR COFFEE******************* SO WE CAN PERFROM REMOVE**S**SD*SD*S*D*SD*SDASBDBASDBADBJWLKHDBAWJHKDBAJDBL
-    private int orderNumber;
+    private int runningOrderNumber;
+    private ArrayList<Integer> orderNumber;
     private ArrayList<MenuItem> orderItems;
-
-    private ArrayList<ArrayList<MenuItem>> pastOrders;
+    private ArrayList<Order> pastOrders;
+    private ArrayList<String> orderItemsStrings;
 
     public Order(){
-        orderNumber = 1;
+        runningOrderNumber = 0;
+        orderNumber = new ArrayList<Integer>();
         orderItems = new ArrayList<MenuItem>();
-        pastOrders = new ArrayList<ArrayList<MenuItem>>();
+        pastOrders = new ArrayList<Order>();
+        orderItemsStrings = new ArrayList<String>();
+        orderItemsStrings.add("");
     }
 
 
@@ -41,10 +48,12 @@ public class Order {
         //System.out.println("PRE ADD-------------");
         //printOrder();
         orderItems.add(coffee);
+        orderItemsStrings.add(coffee.toString());
+        //orderItemsStrings.addAll(coffee);
 
         //System.out.println("Num of items in order: " + orderItems.size());
         //System.out.println("POST ADD-------------");
-        printOrder();
+
     }
 
 
@@ -52,17 +61,35 @@ public class Order {
 
         //System.out.println(orderItems);
         orderItems.addAll(order.getDonutList());
+        orderItemsStrings.addAll(order.getDonutListString());
         //System.out.println("Num of items in order: "+orderItems.size());
         //printOrder();
     }
 
     public void newOrder(){
-        orderNumber++;
-        pastOrders.add(orderItems);
+        orderNumber.add(runningOrderNumber);
+        runningOrderNumber++;
+        pastOrders.add(this);
         orderItems.clear();
     }
+    public void removePastOrder(int input){
+        int pastOrderIndex = orderNumber.indexOf(Integer.valueOf(input));
+        orderNumber.remove(Integer.valueOf(input));
+        pastOrders.remove(pastOrderIndex);
 
-    public int getOrderNumber(){
+    }
+
+    public ArrayList<MenuItem> getPastOrderItems(int input){
+        int pastOrderIndex = orderNumber.indexOf(Integer.valueOf(input));
+        return pastOrders.get(pastOrderIndex).getOrderItems();
+    }
+    public double getPastOrderPrice(int input){
+        int pastOrderIndex = orderNumber.indexOf(Integer.valueOf(input));
+        return pastOrders.get(pastOrderIndex).getOrderPrice();
+    }
+
+
+    public ArrayList<Integer> getOrderNumber(){
         return orderNumber;
     }
     public ArrayList<MenuItem> getOrderItems(){
@@ -76,21 +103,21 @@ public class Order {
         }
     }
 
-
+    public ArrayList<String> getOrderItemsStrings(){
+        return orderItemsStrings;
+    }
 
     public void removeCoffee(Coffee removeCoffee){
+        int coffeeIndex = orderItems.indexOf(removeCoffee);
         orderItems.remove(removeCoffee);
+        orderItemsStrings.remove(coffeeIndex);
     }
 
     public void removeDonut(Donut removeDonut){
-        for(MenuItem d : orderItems){
-            if(! (d instanceof Donut)) continue;
-            Donut tempDonut = (Donut) d;
-            if(tempDonut.flavorEquals(removeDonut)){
-                orderItems.remove(tempDonut);
-                return;
-            }
-        }
+        int donutIndex = orderItems.indexOf(removeDonut);
+        orderItems.remove(removeDonut);
+        orderItemsStrings.remove(donutIndex);
+
     }
 
     public double getOrderPrice(){
@@ -100,6 +127,66 @@ public class Order {
         }
         return totalPrice;
     }
+
+    public int findItem(String item){
+        if(isCoffee(item)){
+
+        }
+        int ret = 0;
+        for(String check : orderItemsStrings){
+            if(check.equals(item)) break;
+            ret++;
+        }
+        return ret;
+    }
+
+    public boolean isCoffee(String item){
+        return (item.contains("Coffee"));
+    }
+
+    public void deleteItem(int index){
+
+        orderItemsStrings.remove(index);
+        orderItems.remove(index);
+
+    }
+
+    public void exportOrder(int orderIndex){
+
+        String directory = "/com/example/project4/exportOrders";
+
+        Path path = Paths.get(directory);
+        if(!Files.exists(path)){
+            try{
+                Files.createDirectories(path);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+        String fileName = directory + "/Order " + orderIndex + ".txt";
+        ArrayList<String> exportData = pastOrders.get(orderIndex).getOrderItemsStrings();
+        File ret = new File(fileName);
+
+        try{
+            FileWriter fw = new FileWriter(ret);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            for(String s : exportData){
+                bw.write(s);
+                bw.newLine();
+            }
+            bw.close();
+            fw.close();
+
+        }catch(IOException e){
+            e.printStackTrace();
+
+        }
+
+    }
+
+
 
 
 }
