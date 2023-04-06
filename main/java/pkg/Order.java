@@ -1,7 +1,5 @@
 package pkg;
 
-import javafx.scene.control.Menu;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,16 +28,19 @@ public class Order {
     private int runningOrderNumber;
     private ArrayList<Integer> orderNumber;
     private ArrayList<MenuItem> orderItems;
-    private ArrayList<Order> pastOrders;
+    private ArrayList<ArrayList<MenuItem>> pastOrders;
+    private ArrayList<ArrayList<String>> pastOrdersString;
+
     private ArrayList<String> orderItemsStrings;
 
     public Order(){
-        runningOrderNumber = 0;
+        runningOrderNumber = 1;
         orderNumber = new ArrayList<Integer>();
         orderItems = new ArrayList<MenuItem>();
-        pastOrders = new ArrayList<Order>();
+        pastOrders = new ArrayList<ArrayList<MenuItem>>();
+        pastOrdersString = new ArrayList<ArrayList<String>>();
         orderItemsStrings = new ArrayList<String>();
-        orderItemsStrings.add("");
+        //orderItemsStrings.add("");
     }
 
 
@@ -69,8 +70,27 @@ public class Order {
     public void newOrder(){
         orderNumber.add(runningOrderNumber);
         runningOrderNumber++;
-        pastOrders.add(this);
+        ArrayList<MenuItem> miTemp = orderItems;
+        pastOrders.add(miTemp);
+        ArrayList<String> miStrings = orderItemsStrings;
+        pastOrdersString.add(miStrings);
+        System.out.println("orderItemStrings before storeage" + orderItemsStrings);
+        System.out.println("new order logged order string"+pastOrdersString.get(0));
+        if(pastOrdersString.size() > 1) System.out.println("new order logged order string in 1: " + pastOrdersString.get(1));
+
+        ArrayList<ArrayList<String>> temp = this.getAllPastOrderString();
+        System.out.println("ALL LOGGED ORDERS:");
+        for(ArrayList<String> i : temp){
+            System.out.println("---------------");
+            System.out.println(i);
+            System.out.println("---------------");
+        }
+        System.out.println("END LOGGED ORDERS:");
+
+
+
         orderItems.clear();
+        orderItemsStrings.clear();
     }
     public void removePastOrder(int input){
         int pastOrderIndex = orderNumber.indexOf(Integer.valueOf(input));
@@ -81,20 +101,50 @@ public class Order {
 
     public ArrayList<MenuItem> getPastOrderItems(int input){
         int pastOrderIndex = orderNumber.indexOf(Integer.valueOf(input));
-        return pastOrders.get(pastOrderIndex).getOrderItems();
+        return pastOrders.get(pastOrderIndex);
     }
+
+    public ArrayList<String> getPastOrderStrings(int input){
+        int pastOrderIndex = orderNumber.indexOf(Integer.valueOf(input));
+        System.out.println("first list in pastorderstring "+pastOrdersString.get(0));
+
+        System.out.println(pastOrderIndex + " input: " + input);
+        System.out.println(pastOrdersString.get(pastOrderIndex) + " pastOrderString size" + pastOrdersString.size());
+
+        return pastOrdersString.get(pastOrderIndex);
+    }
+
+    public ArrayList<ArrayList<String>> getAllPastOrderString(){
+        return pastOrdersString;
+    }
+
     public double getPastOrderPrice(int input){
         int pastOrderIndex = orderNumber.indexOf(Integer.valueOf(input));
-        return pastOrders.get(pastOrderIndex).getOrderPrice();
+
+        double totalPrice = 0;
+        for(MenuItem i : pastOrders.get(pastOrderIndex)){
+            totalPrice += i.itemPrice();
+        }
+        return totalPrice;
     }
+
+
 
 
     public ArrayList<Integer> getOrderNumber(){
         return orderNumber;
     }
+
     public ArrayList<MenuItem> getOrderItems(){
         return orderItems;
     }
+
+   // public void resetOrder(int i){
+   //     getPastOrders().get(i).orderItems.clear();
+   //     orderItems.clear();
+   //     getPastOrders().get(i).orderItemsStrings.clear();
+
+  //  }
 
 
     public void printOrder(){
@@ -118,6 +168,9 @@ public class Order {
         orderItems.remove(removeDonut);
         orderItemsStrings.remove(donutIndex);
 
+    }
+    public ArrayList<ArrayList<MenuItem>> getPastOrders(){
+        return pastOrders;
     }
 
     public double getOrderPrice(){
@@ -165,7 +218,7 @@ public class Order {
         }
 
         String fileName = directory + "/Order " + orderIndex + ".txt";
-        ArrayList<String> exportData = pastOrders.get(orderIndex).getOrderItemsStrings();
+        ArrayList<String> exportData = pastOrdersString.get(orderIndex);
         File ret = new File(fileName);
 
         try{

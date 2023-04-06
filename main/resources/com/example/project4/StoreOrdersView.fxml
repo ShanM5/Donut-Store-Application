@@ -14,11 +14,11 @@
          <font>
             <Font size="30.0" />
          </font></Text>
-      <ComboBox layoutX="38.0" layoutY="81.0" prefWidth="150.0" />
-      <TextField editable="false" layoutX="349.0" layoutY="81.0" />
+      <ComboBox fx:id="orderNumberPicker" layoutX="38.0" layoutY="81.0" prefWidth="150.0" />
+      <TextField fx:id="totalAmount" editable="false" layoutX="349.0" layoutY="81.0" />
       <Text layoutX="262.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Amount:" />
-      <ListView layoutX="35.0" layoutY="125.0" prefHeight="211.0" prefWidth="528.0" />
-      <Button layoutX="113.0" layoutY="353.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Cancel Order" />
-      <Button layoutX="301.0" layoutY="353.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Export Orders" />
+      <ListView fx:id="storeOrderListView" layoutX="35.0" layoutY="125.0" prefHeight="211.0" prefWidth="528.0" />
+      <Button layoutX="113.0" layoutY="353.0" mnemonicParsing="false" onAction="#cancelOrder" prefHeight="25.0" prefWidth="180.0" text="Cancel Order" />
+      <Button layoutX="301.0" layoutY="353.0" mnemonicParsing="false" onAction="#exportOrders" prefHeight="25.0" prefWidth="180.0" text="Export Orders" />
    </children>
 </AnchorPane>

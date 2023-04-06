@@ -62,9 +62,9 @@ public class OrderingBasketController {
         orderBasketView.setItems(FXCollections.observableArrayList(listViewString));
         listViewString = new ArrayList<String>();
 
-        if (orderBasketView.getItems().get(0).isEmpty()) {
-            orderBasketView.getSelectionModel().select(1);
-        }
+        //if (orderBasketView.getItems().get(0).isEmpty()) {
+       //     orderBasketView.getSelectionModel().select(1);
+       // }
         orderBasketView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.intValue() == 0 && orderBasketView.getItems().get(0).isEmpty()) {
                 orderBasketView.getSelectionModel().select(1);
@@ -79,7 +79,20 @@ public class OrderingBasketController {
 
     @FXML
     public void placeOrder(){
+
+
+
         order.newOrder();
+        orderBasketView.getItems().clear();
+        subTotal.setText("$0.00");
+        salesTax.setText("$0.00");
+        totalAmount.setText("$0.00");
+
+
+
+        /******************************hello how ur*/
+        //CREATE A METHOD TO RESET THE BASEKT, THE PRICE, THE TAX, THE TOTAL WHEN FRESH WHEN WE PLACE THE ORDER and order
+        //mainViewController.resetBasket()
     }
 
 
@@ -101,7 +114,7 @@ public class OrderingBasketController {
         Object selectedItem = orderBasketView.getSelectionModel().getSelectedItem();
         orderBasketView.getItems().remove(selectedItem);
         //Use the order's .deleteItem, with string parameter of the list view
-        if(orderBasketView.getSelectionModel().getSelectedItem() != null) {
+        if(orderBasketView.getSelectionModel().getSelectedItem() != null && orderBasketView.getItems().size() != 0) {
 
             String removed = orderBasketView.getSelectionModel().getSelectedItem().toString();
 

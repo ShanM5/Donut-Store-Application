@@ -25,6 +25,7 @@ public class MainViewController {
     private Parent rootForB;
 
     OrderingBasketController orderingBasketController;
+    StoreOrdersController storeOrdersController;
 
 
     @FXML
@@ -64,6 +65,9 @@ public class MainViewController {
     }
 
 
+    public void resetBasket(){
+
+    }
     @FXML
     protected void openDonutMenu() throws IOException {
         //opens the donut menu stage
@@ -106,9 +110,12 @@ public class MainViewController {
         //opens the store order menu
         FXMLLoader loaderStoreOrdersMenu = new FXMLLoader(getClass().getResource("StoreOrdersView.fxml"));
         Parent r = loaderStoreOrdersMenu.load();
+        StoreOrdersController storeOrdersController =loaderStoreOrdersMenu.getController();
+        storeOrdersController.setMainController(this);
         Stage storeOrderMenu = new Stage();
         storeOrderMenu.setScene(new Scene(r));
         storeOrderMenu.show();
+        storeOrdersController.setOrderNumbers();
     }
 
 }
