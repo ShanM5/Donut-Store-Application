@@ -41,5 +41,6 @@ public class Donut extends MenuItem{
     public boolean flavorEquals(Donut d){
         return (this.getDonutFlavor().equals(d.getDonutFlavor()));
     }
+    public String toString(){return donutType + " " + donutFlavor + " " + numberOfDonuts;}
 
 }

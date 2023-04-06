@@ -8,8 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import pkg.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainViewController {
     private Stage stage;
@@ -18,15 +20,39 @@ public class MainViewController {
     @FXML
     private Label welcomeText;
 
+    Order order = new Order();
+
+
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    public void initialize() throws IOException{
+        OrderingBasketController orderingBasketController = new OrderingBasketController();
     }
+
+    public void addCoffee(Coffee coffee){
+        order.addCoffee(coffee);
+        System.out.println(order);
+    }
+
+    public void addDonut(DonutOrder donuts){
+        order.addDonutOrder(donuts);
+        System.out.println(order);
+    }
+
+    public Order getOrderForBasket() throws IOException{
+        return null;
+
+    }
+    public Order getOrder(){
+        return order;
+    }
+
     @FXML
     protected void openDonutMenu() throws IOException {
         //opens the donut menu stage
         FXMLLoader loaderDonutMenu = new FXMLLoader(getClass().getResource("OrderingDonutsView.fxml"));
         Parent r = loaderDonutMenu.load();
+        OrderingDonutsController orderingDonutsController = loaderDonutMenu.getController();
+        orderingDonutsController.setMainController(this);
         Stage donutMenu = new Stage();
         donutMenu.setScene(new Scene(r));
         donutMenu.show();
@@ -35,31 +61,33 @@ public class MainViewController {
     @FXML
     protected void openCoffeeMenu() throws IOException {
         //opens the coffee menu stage
-        FXMLLoader loaderDonutMenu = new FXMLLoader(getClass().getResource("OrderingCoffeeView.fxml"));
-        Parent r = loaderDonutMenu.load();
-        Stage donutMenu = new Stage();
-        donutMenu.setScene(new Scene(r));
-        donutMenu.show();
+        FXMLLoader loaderCoffeeMenu = new FXMLLoader(getClass().getResource("OrderingCoffeeView.fxml"));
+        Parent r = loaderCoffeeMenu.load();
+        OrderingCoffeeController orderingCoffeeController = loaderCoffeeMenu.getController();
+        orderingCoffeeController.setMainController(this);
+        Stage coffeeMenu = new Stage();
+        coffeeMenu.setScene(new Scene(r));
+        coffeeMenu.show();
     }
 
     @FXML
     protected void openOrderingBasketMenu() throws IOException {
         //opens the ordering basket menu stage
-        FXMLLoader loaderDonutMenu = new FXMLLoader(getClass().getResource("OrderingBasketView.fxml"));
-        Parent r = loaderDonutMenu.load();
-        Stage donutMenu = new Stage();
-        donutMenu.setScene(new Scene(r));
-        donutMenu.show();
+        FXMLLoader loaderOrderingBasketMenu = new FXMLLoader(getClass().getResource("OrderingBasketView.fxml"));
+        Parent r = loaderOrderingBasketMenu.load();
+        Stage basketMenu = new Stage();
+        basketMenu.setScene(new Scene(r));
+        basketMenu.show();
 
     }
     @FXML
     protected void openStoreOrdersMenu() throws IOException {
         //opens the store order menu
-        FXMLLoader loaderDonutMenu = new FXMLLoader(getClass().getResource("StoreOrdersView.fxml"));
-        Parent r = loaderDonutMenu.load();
-        Stage donutMenu = new Stage();
-        donutMenu.setScene(new Scene(r));
-        donutMenu.show();
+        FXMLLoader loaderStoreOrdersMenu = new FXMLLoader(getClass().getResource("StoreOrdersView.fxml"));
+        Parent r = loaderStoreOrdersMenu.load();
+        Stage storeOrderMenu = new Stage();
+        storeOrderMenu.setScene(new Scene(r));
+        storeOrderMenu.show();
     }
 
 }

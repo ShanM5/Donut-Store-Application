@@ -18,19 +18,19 @@
             <Font size="29.0" />
          </font>
       </Text>
-      <CheckBox layoutX="45.0" layoutY="143.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="107.0" text="Sweet Cream" />
-      <CheckBox layoutX="45.0" layoutY="182.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="101.0" text="French Vanilla" />
-      <CheckBox layoutX="155.0" layoutY="143.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="66.0" text="Mocha" />
-      <CheckBox layoutX="155.0" layoutY="182.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="66.0" text="Caramel" />
+      <CheckBox fx:id="sweetCream" layoutX="45.0" layoutY="143.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="107.0" text="Sweet Cream" />
+      <CheckBox fx:id="frenchVanilla" layoutX="45.0" layoutY="182.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="101.0" text="French Vanilla" />
+      <CheckBox fx:id="mocha" layoutX="155.0" layoutY="143.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="66.0" text="Mocha" />
+      <CheckBox fx:id="caramel" layoutX="155.0" layoutY="182.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="66.0" text="Caramel" />
       <ComboBox fx:id="coffeeViewSize" layoutX="255.0" layoutY="151.0" prefWidth="150.0" promptText="Size" />
       <ComboBox fx:id="coffeeViewQuantity" layoutX="255.0" layoutY="210.0" prefWidth="150.0" />
       <Label layoutX="255.0" layoutY="118.0" text="Select a Size" />
       <Label layoutX="255.0" layoutY="191.0" text="Select Quantity" />
-      <CheckBox layoutX="45.0" layoutY="222.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="81.0" text="Irish cream" />
+      <CheckBox fx:id="irishCream" layoutX="45.0" layoutY="222.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="81.0" text="Irish Cream" />
       <Text layoutX="85.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Addins:" />
-      <TextField layoutX="152.0" layoutY="298.0" />
+      <TextField fx:id="coffeePrice" editable="false" layoutX="152.0" layoutY="298.0" />
       <Text layoutX="188.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Running Total:" />
-      <Button layoutX="177.0" layoutY="332.0" mnemonicParsing="false" text="Add To Order" />
+      <Button layoutX="177.0" layoutY="332.0" mnemonicParsing="false" onAction="#addToOrder" text="Add To Order" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="216.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@coffeeMenuImage.jpg" />

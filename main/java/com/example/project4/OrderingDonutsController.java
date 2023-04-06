@@ -2,6 +2,8 @@ package com.example.project4;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -10,11 +12,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import pkg.Donut;
 import pkg.DonutOrder;
+
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 
-public class OrderingDonutsController {
+
+
+/*
+    use listView<String> as an index cause the listview is direcly correlated to the arraylist of data
+ */
+
+
+
+public class OrderingDonutsController{
     DonutOrder DonutOrder = new DonutOrder();
     @FXML private ComboBox chooseDonut;
     @FXML private ComboBox numberOfDonuts;
@@ -28,13 +40,17 @@ public class OrderingDonutsController {
     ObservableList<String> yeastFlavors;
     ObservableList<String> holesFlavors;
     DecimalFormat numFormat = new DecimalFormat("0.00");
+    private Parent root;
+    FXMLLoader loader;
+    MainViewController mainViewController;
+
     public OrderingDonutsController() {
     }
-   // ObservableList<String> yeastFlavors = FXCollections.observableArrayList("Jelly", "Glazed", "Chocolate Frosted", "Strawberry Frosted", "Sugar", "Lemon Filled");
-   // ObservableList<String> cakeFlavors = FXCollections.observableArrayList("Cinnamon Sugar", "Old Fashion", "Blueberry");
-   // ObservableList<String> holesFlavors = FXCollections.observableArrayList("Glazed Holes", "Jelly Holes", "Cinnamon Sugar Holes");
+    // ObservableList<String> yeastFlavors = FXCollections.observableArrayList("Jelly", "Glazed", "Chocolate Frosted", "Strawberry Frosted", "Sugar", "Lemon Filled");
+    // ObservableList<String> cakeFlavors = FXCollections.observableArrayList("Cinnamon Sugar", "Old Fashion", "Blueberry");
+    // ObservableList<String> holesFlavors = FXCollections.observableArrayList("Glazed Holes", "Jelly Holes", "Cinnamon Sugar Holes");
 
-    public void initialize() {
+    public void initialize() throws IOException {
         chooseDonut.setDisable(false);
         chooseDonut.getItems().removeAll(chooseDonut.getItems());
         chooseDonut.getItems().addAll("Yeast Donuts", "Cake Donuts", "Donut Holes");
@@ -67,6 +83,12 @@ public class OrderingDonutsController {
                 donutListView.setItems(cakeFlavors);
             }
         });
+
+
+        loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
+        root = loader.load();
+        mainViewController = loader.getController();
+
     }
     private ArrayList<String> addedToTheTempOrder = new ArrayList<String>();
     @FXML TextField donutSubTotal;
@@ -90,7 +112,7 @@ public class OrderingDonutsController {
         }
     }
 
-    @FXML public void removeFromTempOrder(){
+    @FXML public void removeFromTempOrder() throws IOException {
         if(donutTempOrder.getSelectionModel().getSelectedItem() == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -102,6 +124,7 @@ public class OrderingDonutsController {
             flavor = flavor.substring(0,flavor.length()-3);
             String removedType = DonutOrder.getDonutType(new Donut(flavor));
             DonutOrder.removeDonut(new Donut(flavor));
+
             donutTempOrder.setItems(FXCollections.observableArrayList((ArrayList<String>) DonutOrder.getDonutListString()));
             String formattedNumber = numFormat.format(DonutOrder.getOrderPrice());
 
@@ -117,9 +140,20 @@ public class OrderingDonutsController {
 
 
         }
+
+    }
+
+    public void setMainController(MainViewController mainView){
+        mainViewController = mainView;
     }
 
     @FXML public void addToBasket(){
-        
+        DonutOrder donutOrder = DonutOrder;
+        mainViewController.addDonut(donutOrder);
+        System.out.println("donut addy: " + mainViewController);
+    }
+
+    public DonutOrder getDonutOrder(){
+        return DonutOrder;
     }
 }
