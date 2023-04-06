@@ -29,13 +29,15 @@ public class MainViewController {
     }
 
     public void addCoffee(Coffee coffee){
+
         order.addCoffee(coffee);
-        System.out.println(order);
+
+
+
     }
 
     public void addDonut(DonutOrder donuts){
         order.addDonutOrder(donuts);
-        System.out.println(order);
     }
 
     public Order getOrderForBasket() throws IOException{
@@ -75,6 +77,8 @@ public class MainViewController {
         //opens the ordering basket menu stage
         FXMLLoader loaderOrderingBasketMenu = new FXMLLoader(getClass().getResource("OrderingBasketView.fxml"));
         Parent r = loaderOrderingBasketMenu.load();
+        OrderingBasketController orderingBasketController = loaderOrderingBasketMenu.getController();
+        orderingBasketController.setMainController(this);
         Stage basketMenu = new Stage();
         basketMenu.setScene(new Scene(r));
         basketMenu.show();

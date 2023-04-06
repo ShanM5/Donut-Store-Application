@@ -37,21 +37,23 @@ public class Order {
 
 
     public void addCoffee(Coffee coffee){
-        System.out.println(orderItems);
-
+        //System.out.println(orderItems);
+        //System.out.println("PRE ADD-------------");
+        //printOrder();
         orderItems.add(coffee);
 
-        System.out.println("Num of items in order: " + orderItems.size());
+        //System.out.println("Num of items in order: " + orderItems.size());
+        //System.out.println("POST ADD-------------");
         printOrder();
     }
 
 
     public void addDonutOrder(DonutOrder order){
 
-        System.out.println(orderItems);
+        //System.out.println(orderItems);
         orderItems.addAll(order.getDonutList());
-        System.out.println("Num of items in order: "+orderItems.size());
-        printOrder();
+        //System.out.println("Num of items in order: "+orderItems.size());
+        //printOrder();
     }
 
     public void newOrder(){
@@ -69,11 +71,9 @@ public class Order {
 
 
     public void printOrder(){
-        System.out.println("--------------------------");
         for(MenuItem mi : orderItems){
             System.out.println(mi.toString());
         }
-        System.out.println("--------------------------");
     }
 
 

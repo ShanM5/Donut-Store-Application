@@ -1,5 +1,7 @@
 package pkg;
 
+import javafx.scene.Parent;
+
 import java.util.ArrayList;
 
 public class DonutOrder {
@@ -43,6 +45,10 @@ public class DonutOrder {
     }
     public DonutOrder getDonutOrder(){
         return this;
+    }
+
+    public void clearOrder(){
+        donutOrder.clear();
     }
 
     public ArrayList<Donut> getDonutList(){
