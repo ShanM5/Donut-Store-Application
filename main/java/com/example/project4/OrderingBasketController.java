@@ -65,11 +65,6 @@ public class OrderingBasketController {
         listViewString = new ArrayList<String>();
 
 
-orderBasketView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-// if (newValue.intValue() == 0 && orderBasketView.getItems().get(0).isEmpty()) {
-            //       orderBasketView.getSelectionModel().select(1);
-            //  }
-        });
 
     }
 
@@ -123,7 +118,7 @@ orderBasketView.getSelectionModel().selectedIndexProperty().addListener((observa
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Basket is empty!");
-            alert.setContentText("Need to add items to basket inorder to perform removal");
+            alert.setContentText("Need to add items to basket inorder to perform removal!");
             alert.show();
             return;
         }
@@ -137,22 +132,10 @@ orderBasketView.getSelectionModel().selectedIndexProperty().addListener((observa
             totalAmount.setText("$0.00");
         } else if (selectedIndex == 0 && orderBasketView.getItems().size() == 1) {
             order.deleteItem(0);
-            subtotal = Double.parseDouble(numFormat.format(order.getOrderPrice()));
-            tax = Double.parseDouble(numFormat.format(order.getOrderPrice() * 0.06625));
-            total = Double.parseDouble(numFormat.format(subtotal + tax));
-            subTotal.setText("$" + subtotal);
-            totalAmount.setText("$" + total);
-            salesTax.setText("$" + tax);
         } else if (orderBasketView.getSelectionModel().getSelectedItem() != null && orderBasketView.getItems().size() != 1.0) {
             String removed = orderBasketView.getSelectionModel().getSelectedItem().toString();
             int removeIndex = findItem(removed);
             order.deleteItem((removeIndex));
-            subtotal = Double.parseDouble(numFormat.format(order.getOrderPrice()));
-            tax = Double.parseDouble(numFormat.format(order.getOrderPrice() * 0.06625));
-            total = Double.parseDouble(numFormat.format(subtotal + tax));
-            subTotal.setText("$" + subtotal);
-            totalAmount.setText("$" + total);
-            salesTax.setText("$" + tax);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -161,6 +144,12 @@ orderBasketView.getSelectionModel().selectedIndexProperty().addListener((observa
             alert.show();
             return;
         }
+        subtotal = Double.parseDouble(numFormat.format(order.getOrderPrice()));
+        tax = Double.parseDouble(numFormat.format(order.getOrderPrice() * 0.06625));
+        total = Double.parseDouble(numFormat.format(subtotal + tax));
+        subTotal.setText("$" + subtotal);
+        totalAmount.setText("$" + total);
+        salesTax.setText("$" + tax);
 
     }
 
