@@ -67,6 +67,14 @@ public class Order {
     }
 
     /**
+     * clears the arraylist of current menu items and strings
+     */
+    public void clearOrder(){
+        orderItems.clear();
+        orderItemsStrings.clear();
+    }
+
+    /**
      * removes a past order
      * @param input an int that represents the order number and index within the arraylist
      */
@@ -104,14 +112,13 @@ public class Order {
     }
 
     /**
-     * 
-     * @param index
-     * @return
+     * returns the past order number given an index
+     * @param index index of the past order number
+     * @return returns the number of the order
      */
     public int getPastOrderNumber(int index){
         return orderNumber.get(index);
     }
-
 
     /**
      * returns the current order's items as an arraylist of strings
@@ -121,8 +128,6 @@ public class Order {
         return orderItemsStrings;
     }
 
-
-
     /**
      * returns the 2d arraylist of past orders
      * @return returns the 2d arraylist of past orders
@@ -130,8 +135,6 @@ public class Order {
     public ArrayList<ArrayList<MenuItem>> getPastOrders(){
         return pastOrders;
     }
-
-
 
     /**
      * calculates the current order's price
@@ -144,9 +147,6 @@ public class Order {
         }
         return totalPrice;
     }
-
-
-
 
     /**
      * deletes an item from the order given an index

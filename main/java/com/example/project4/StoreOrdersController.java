@@ -54,7 +54,6 @@ public class StoreOrdersController {
                 ArrayList<String> viewingOrder = order.getPastOrderStrings(newValue);
                 storeOrderListView.setItems(FXCollections.observableArrayList(viewingOrder));
                 double displayTotal = Double.parseDouble(numFormat.format(order.getPastOrderPrice(newValue)));
-                System.out.print(displayTotal);
                 totalAmount.setText("$" + String.valueOf(displayTotal));
             }
         });
