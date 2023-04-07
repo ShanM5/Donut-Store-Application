@@ -10,12 +10,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import pkg.MenuItem;
 import pkg.Order;
-
 import java.text.DecimalFormat;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
@@ -23,14 +21,12 @@ import java.util.ArrayList;
  * @author Hieu Nguyen, Shan Malik
  */
 public class StoreOrdersController {
-
     @FXML
     private ComboBox<Integer> orderNumberPicker;
     @FXML
     private ListView<String> storeOrderListView;
     @FXML
     private TextField totalAmount;
-
     MainViewController mainViewController;
     FXMLLoader loader;
     Parent root;
@@ -40,6 +36,7 @@ public class StoreOrdersController {
 
     /**
      * initializes the menu
+     *
      * @throws IOException throws error if file is not found
      */
     @FXML
@@ -53,12 +50,12 @@ public class StoreOrdersController {
         orderNumberPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             storeOrderListView.getItems().clear();
 
-            if(newValue != null) {
+            if (newValue != null) {
                 ArrayList<String> viewingOrder = order.getPastOrderStrings(newValue);
                 storeOrderListView.setItems(FXCollections.observableArrayList(viewingOrder));
-                double tot = order.getPastOrderPrice(newValue);
-                System.out.print(tot);
-                totalAmount.setText(String.valueOf(tot));
+                double displayTotal = Double.parseDouble(numFormat.format(order.getPastOrderPrice(newValue)));
+                System.out.print(displayTotal);
+                totalAmount.setText("$" + String.valueOf(displayTotal));
             }
         });
     }
@@ -66,23 +63,22 @@ public class StoreOrdersController {
     /**
      * sets the order numbers of the list
      */
-    public void setOrderNumbers(){
+    public void setOrderNumbers() {
         order = mainViewController.getOrder();
         int numberOfOrders = order.getPastOrders().size();
-
-        for(int i = 1; i < numberOfOrders + 1; i++){
+        for (int i = 1; i < numberOfOrders + 1; i++) {
             numbersForOrderNumberPicker.add(i);
         }
-
         orderNumberPicker.setItems(FXCollections.observableArrayList((ArrayList<Integer>) numbersForOrderNumberPicker));
 
     }
 
     /**
      * sets main view controller to a given main view
+     *
      * @param mainView the main view to be set to
      */
-    public void setMainController(MainViewController mainView){
+    public void setMainController(MainViewController mainView) {
         mainViewController = mainView;
     }
 
@@ -90,9 +86,8 @@ public class StoreOrdersController {
      * cancels an order within the list
      */
     @FXML
-    public void cancelOrder(){
-        if(orderNumberPicker.getValue() != null) {
-
+    public void cancelOrder() {
+        if (orderNumberPicker.getValue() != null) {
             int selectedForRemove = orderNumberPicker.getSelectionModel().getSelectedItem();
             order.removePastOrder(selectedForRemove);
             ObservableList<Integer> items = orderNumberPicker.getItems();
@@ -101,7 +96,7 @@ public class StoreOrdersController {
             orderNumberPicker.setValue(null);
             totalAmount.setText("$0.00");
 
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Order Number Not Selected!");
@@ -115,33 +110,38 @@ public class StoreOrdersController {
      * exports orders as a txt file
      */
     @FXML
-    public void exportOrders(){
-        try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter("exportedOrders.txt"));
-            int i = 0;
-            for(ArrayList<MenuItem> pastOrder: order.getPastOrders()){
+    public void exportOrders() {
 
-                String oNum = String.valueOf(order.getPastOrderNumber(i));
-                writer.write("Order Number: "+ oNum);
-                writer.newLine();
+        if (order.getPastOrders().size() != 0) {
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("exportedOrders.txt"));
+                int i = 0;
+                for (ArrayList<MenuItem> pastOrder : order.getPastOrders()) {
 
-                for(String menuItem : order.getPastOrderStrings(Integer.parseInt(oNum))){
-                    writer.write(menuItem);
+                    String oNum = String.valueOf(order.getPastOrderNumber(i));
+                    writer.write("Order Number: " + oNum);
                     writer.newLine();
-                }
-                writer.newLine();
 
-                i++;
+                    for (String menuItem : order.getPastOrderStrings(Integer.parseInt(oNum))) {
+                        writer.write(menuItem);
+                        writer.newLine();
+                    }
+                    writer.newLine();
+                    i++;
+                }
+                writer.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            writer.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No Orders To Export!");
+            alert.setContentText("Try adding some orders! Cannot export orders if you have no orders!");
+            alert.show();
         }
 
+
     }
-
-
-
-
-
 }

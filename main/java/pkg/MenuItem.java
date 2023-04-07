@@ -1,6 +1,5 @@
 package pkg;
 
-import java.util.ArrayList;
 
 /**
  * abstract class of menuItem that donut and coffee fall under

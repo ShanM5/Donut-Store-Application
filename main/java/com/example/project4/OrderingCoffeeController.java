@@ -4,16 +4,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import pkg.*;
 import java.util.ArrayList;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
 
@@ -22,7 +17,6 @@ import java.text.DecimalFormat;
  * @author Hieu Nguyen, Shan Malik
  */
 public class OrderingCoffeeController {
-
     @FXML private ComboBox coffeeViewSize;
     @FXML private ComboBox coffeeViewQuantity;
     @FXML private CheckBox sweetCream;
@@ -33,9 +27,7 @@ public class OrderingCoffeeController {
     private Parent root;
     FXMLLoader loader;
     MainViewController mainViewController;
-
     @FXML private TextField coffeePrice;
-
     Coffee coffee = new Coffee();
     DecimalFormat numFormat = new DecimalFormat("0.00");
 
@@ -176,11 +168,8 @@ public class OrderingCoffeeController {
      * @throws IOException throws error if file is not found
      */
     @FXML public void addToOrder() throws IOException {
-
         Coffee newCoffee = coffee;
         mainViewController.addCoffee(coffee);
-
-
     }
 
     /**
@@ -190,8 +179,4 @@ public class OrderingCoffeeController {
     public void setMainController(MainViewController mainView){
         mainViewController = mainView;
     }
-
-
-
-
 }

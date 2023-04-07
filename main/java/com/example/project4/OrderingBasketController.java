@@ -1,18 +1,11 @@
 package com.example.project4;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import pkg.CoffeeOrder;
-import pkg.DonutOrder;
-import javafx.animation.Timeline;
 import pkg.*;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -60,18 +53,11 @@ public class OrderingBasketController {
 
         order = mainViewController.getOrder();
 
-
-        //  loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
-        //  root = loader.load();
-        //  mainViewController = loader.getController();
         listViewString = order.getOrderItemsStrings();
-       // order.printOrder();
         orderBasketView.setItems(FXCollections.observableArrayList(listViewString));
         listViewString = new ArrayList<String>();
 
-        //if (orderBasketView.getItems().get(0).isEmpty()) {
-        //     orderBasketView.getSelectionModel().select(1);
-        // }
+
         orderBasketView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
            // if (newValue.intValue() == 0 && orderBasketView.getItems().get(0).isEmpty()) {
          //       orderBasketView.getSelectionModel().select(1);
@@ -228,15 +214,15 @@ public class OrderingBasketController {
 
         double subtotal = Double.parseDouble(numFormat.format(order.getOrderPrice()));
 
-        subTotal.setText(subtotal+"");
+        subTotal.setText("$" + subtotal);
 
         double tax = Double.parseDouble(numFormat.format(order.getOrderPrice() * 0.06625));
 
-        salesTax.setText(tax+"");
+        salesTax.setText("$" + tax);
 
         double total = Double.parseDouble(numFormat.format(subtotal + tax));
 
-        totalAmount.setText(total+"");
+        totalAmount.setText("$" + total);
 
 
     }

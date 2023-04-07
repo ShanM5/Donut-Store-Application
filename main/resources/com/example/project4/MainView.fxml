@@ -27,7 +27,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button contentDisplay="TOP" layoutX="315.0" layoutY="63.0" mnemonicParsing="false" onAction="#openCoffeeMenu" prefHeight="226.0" prefWidth="224.0" style="-fx-background-color: #fc4908;" text="pkg.Coffee">
+      <Button contentDisplay="TOP" layoutX="315.0" layoutY="63.0" mnemonicParsing="false" onAction="#openCoffeeMenu" prefHeight="226.0" prefWidth="224.0" style="-fx-background-color: #fc4908;" text="Coffee Menu">
          <graphic>
             <ImageView fitHeight="186.0" fitWidth="192.0" pickOnBounds="true" preserveRatio="true">
                <image>

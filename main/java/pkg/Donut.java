@@ -50,7 +50,6 @@ public class Donut extends MenuItem{
 
 
 
-    public Donut getDonut() {return this;}
 
     /**
      * returns the type of donut

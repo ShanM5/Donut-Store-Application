@@ -125,20 +125,6 @@ public class Coffee extends MenuItem {
         numAdds = listOfAddins.size();
     }
 
-    /**
-     * returns an arraylist of the addins of the coffee
-     * @return returs an arraylist of the addins
-     */
-    public ArrayList getAddins(){
-        return listOfAddins;
-    }
-    public int getNumAdds(){
-        return numAdds;
-    }
-
-    public String getCupSize(){
-        return cupSize;
-    }
 
     /**
      * checks the addins list to another list of addins
@@ -152,13 +138,6 @@ public class Coffee extends MenuItem {
         }
         return true;
 
-    }
-
-
-
-
-    public boolean equals(Coffee c){
-        return checkAddins(c.getAddins()) && (this.cupSize.equals(c.cupSize)) && (this.numCoffees == c.numCoffees);
     }
 
     @Override

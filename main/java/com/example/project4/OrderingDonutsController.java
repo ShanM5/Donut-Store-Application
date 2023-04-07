@@ -30,7 +30,6 @@ public class OrderingDonutsController{
     @FXML
     private ImageView donutMenuImage;
     @FXML private ListView<String> donutListView;
-
     @FXML private ListView<String> donutTempOrder;
     ObservableList<String> cakeFlavors;
     ObservableList<String> yeastFlavors;
@@ -151,8 +150,6 @@ public class OrderingDonutsController{
             }
 
             donutSubTotal.setText("$" + formattedNumber + "");
-
-
         }
 
     }
