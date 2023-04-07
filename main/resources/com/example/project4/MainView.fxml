@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="533.0" prefWidth="571.0" style="-fx-background-color: #4bd3f7;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project4.MainViewController">
    <children>
-      <Label layoutX="77.0" layoutY="-32.0" prefHeight="131.0" prefWidth="482.0" text="Welcome To [CAFE NAME] Cafe!">
+      <Label layoutX="143.0" layoutY="-27.0" prefHeight="131.0" prefWidth="298.0" text="Welcome To RUCafe!">
          <font>
             <Font name="Sitka Text" size="28.0" />
          </font>
@@ -27,7 +27,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button contentDisplay="TOP" layoutX="315.0" layoutY="63.0" mnemonicParsing="false" onAction="#openCoffeeMenu" prefHeight="226.0" prefWidth="224.0" style="-fx-background-color: #fc4908;" text="pkg.Coffee">
+      <Button contentDisplay="TOP" layoutX="315.0" layoutY="63.0" mnemonicParsing="false" onAction="#openCoffeeMenu" prefHeight="226.0" prefWidth="224.0" style="-fx-background-color: #fc4908;" text="Coffee Menu">
          <graphic>
             <ImageView fitHeight="186.0" fitWidth="192.0" pickOnBounds="true" preserveRatio="true">
                <image>
