@@ -5,6 +5,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+/**
+ * A class that has an ararylist of menuitems that represents an order
+ * @author Hieu Nguyen, Shan Malik
+ */
 public class Order {
 
 
@@ -33,6 +38,9 @@ public class Order {
 
     private ArrayList<String> orderItemsStrings;
 
+    /**
+     * default constructor for order
+     */
     public Order(){
         runningOrderNumber = 1;
         orderNumber = new ArrayList<Integer>();
@@ -44,6 +52,10 @@ public class Order {
     }
 
 
+    /**
+     * adds a coffee to the order
+     * @param coffee the coffee to be added
+     */
     public void addCoffee(Coffee coffee){
         //System.out.println(orderItems);
         //System.out.println("PRE ADD-------------");
@@ -57,7 +69,10 @@ public class Order {
 
     }
 
-
+    /**
+     * adds a donut order to the order
+     * @param order the donut order to be added
+     */
     public void addDonutOrder(DonutOrder order){
 
         //System.out.println(orderItems);
@@ -67,31 +82,24 @@ public class Order {
         //printOrder();
     }
 
+    /**
+     * logs the current order into PastOrders and resets the current order
+     */
     public void newOrder(){
         orderNumber.add(runningOrderNumber);
         runningOrderNumber++;
-        ArrayList<MenuItem> miTemp = orderItems;
+        ArrayList<MenuItem> miTemp = new ArrayList<>(orderItems);
         pastOrders.add(miTemp);
-        ArrayList<String> miStrings = orderItemsStrings;
+        ArrayList<String> miStrings = new ArrayList<>(orderItemsStrings);
         pastOrdersString.add(miStrings);
-        System.out.println("orderItemStrings before storeage" + orderItemsStrings);
-        System.out.println("new order logged order string"+pastOrdersString.get(0));
-        if(pastOrdersString.size() > 1) System.out.println("new order logged order string in 1: " + pastOrdersString.get(1));
-
-        ArrayList<ArrayList<String>> temp = this.getAllPastOrderString();
-        System.out.println("ALL LOGGED ORDERS:");
-        for(ArrayList<String> i : temp){
-            System.out.println("---------------");
-            System.out.println(i);
-            System.out.println("---------------");
-        }
-        System.out.println("END LOGGED ORDERS:");
-
-
-
         orderItems.clear();
         orderItemsStrings.clear();
     }
+
+    /**
+     * removes a past order
+     * @param input an int that represents the order number and index within the arraylist
+     */
     public void removePastOrder(int input){
         int pastOrderIndex = orderNumber.indexOf(Integer.valueOf(input));
         orderNumber.remove(Integer.valueOf(input));
@@ -104,13 +112,13 @@ public class Order {
         return pastOrders.get(pastOrderIndex);
     }
 
+    /**
+     * gets an arraylist of a past order's menu items
+     * @param input the index/number representation of the past order
+     * @return returns an arraylist of strings containing the past order's menu items
+     */
     public ArrayList<String> getPastOrderStrings(int input){
         int pastOrderIndex = orderNumber.indexOf(Integer.valueOf(input));
-        System.out.println("first list in pastorderstring "+pastOrdersString.get(0));
-
-        System.out.println(pastOrderIndex + " input: " + input);
-        System.out.println(pastOrdersString.get(pastOrderIndex) + " pastOrderString size" + pastOrdersString.size());
-
         return pastOrdersString.get(pastOrderIndex);
     }
 
@@ -118,6 +126,11 @@ public class Order {
         return pastOrdersString;
     }
 
+    /**
+     * gets the total price of a past order
+     * @param input the index/number representation of the past order
+     * @return returns a double of the past order's price
+     */
     public double getPastOrderPrice(int input){
         int pastOrderIndex = orderNumber.indexOf(Integer.valueOf(input));
 
@@ -128,6 +141,11 @@ public class Order {
         return totalPrice;
     }
 
+    public int getPastOrderNumber(int index){
+        return orderNumber.get(index);
+
+    }
+
 
 
 
@@ -135,24 +153,22 @@ public class Order {
         return orderNumber;
     }
 
+    /**
+     * returns the arraylist of menu items within the order
+     * @return returns the arraylist of menu items within the order
+     */
     public ArrayList<MenuItem> getOrderItems(){
         return orderItems;
     }
 
-   // public void resetOrder(int i){
-   //     getPastOrders().get(i).orderItems.clear();
-   //     orderItems.clear();
-   //     getPastOrders().get(i).orderItemsStrings.clear();
-
-  //  }
 
 
-    public void printOrder(){
-        for(MenuItem mi : orderItems){
-            System.out.println(mi.toString());
-        }
-    }
 
+
+    /**
+     * returns the current order's items as an arraylist of strings
+     * @return returns the current order's items as an arraylist of strings
+     */
     public ArrayList<String> getOrderItemsStrings(){
         return orderItemsStrings;
     }
@@ -169,10 +185,21 @@ public class Order {
         orderItemsStrings.remove(donutIndex);
 
     }
+
+    /**
+     * returns the 2d arraylist of past orders
+     * @return returns the 2d arraylist of past orders
+     */
     public ArrayList<ArrayList<MenuItem>> getPastOrders(){
         return pastOrders;
     }
 
+
+
+    /**
+     * calculates the current order's price
+     * @return return a double representing the current order's price
+     */
     public double getOrderPrice(){
         double totalPrice = 0;
         for(MenuItem i : orderItems){
@@ -193,10 +220,19 @@ public class Order {
         return ret;
     }
 
+    /**
+     * checks if a string represents a coffee
+     * @param item a string to be checked
+     * @return returns true if the string represents a coffee, false otherwise
+     */
     public boolean isCoffee(String item){
         return (item.contains("Coffee"));
     }
 
+    /**
+     * deletes an item from the order given an index
+     * @param index the index of the item in the order to be deleted
+     */
     public void deleteItem(int index){
 
         orderItemsStrings.remove(index);
@@ -204,6 +240,10 @@ public class Order {
 
     }
 
+    /**
+     * Creates a txt file of all past orders
+     * @param orderIndex
+     */
     public void exportOrder(int orderIndex){
 
         String directory = "/com/example/project4/exportOrders";

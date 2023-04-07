@@ -12,20 +12,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import pkg.Donut;
 import pkg.DonutOrder;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
-
 import java.util.ArrayList;
 
 
 
-/*
-    use listView<String> as an index cause the listview is direcly correlated to the arraylist of data
+/**
+ * menu controller for donut menu
+ * @author Hieu Nguyen, Shan Malik
  */
-
-
-
 public class OrderingDonutsController{
     DonutOrder DonutOrder = new DonutOrder();
     @FXML private ComboBox chooseDonut;
@@ -43,13 +39,13 @@ public class OrderingDonutsController{
     private Parent root;
     FXMLLoader loader;
     MainViewController mainViewController;
+    @FXML TextField donutSubTotal;
 
-    public OrderingDonutsController() {
-    }
-    // ObservableList<String> yeastFlavors = FXCollections.observableArrayList("Jelly", "Glazed", "Chocolate Frosted", "Strawberry Frosted", "Sugar", "Lemon Filled");
-    // ObservableList<String> cakeFlavors = FXCollections.observableArrayList("Cinnamon Sugar", "Old Fashion", "Blueberry");
-    // ObservableList<String> holesFlavors = FXCollections.observableArrayList("Glazed Holes", "Jelly Holes", "Cinnamon Sugar Holes");
 
+    /**
+     * initializes the menu
+     * @throws IOException throws error if file is not found
+     */
     public void initialize() throws IOException {
         chooseDonut.setDisable(false);
         chooseDonut.getItems().removeAll(chooseDonut.getItems());
@@ -59,10 +55,28 @@ public class OrderingDonutsController{
         cakeFlavors = FXCollections.observableArrayList("Cinnamon Sugar", "Old Fashion", "Blueberry");
         holesFlavors = FXCollections.observableArrayList("Glazed Holes", "Jelly Holes", "Cinnamon Sugar Holes");
         donutListView.setItems(yeastFlavors);
-        ObservableList<Integer> numbersForDonuts = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+        int maxDonuts = 20;
+        ArrayList<Integer> donutNums = new ArrayList<Integer>();
+        for(int i = 1; i <= maxDonuts; i++) {
+            donutNums.add(i);
+        }
+
+        ObservableList<Integer> numbersForDonuts = FXCollections.observableArrayList(donutNums);
         numberOfDonuts.setItems(numbersForDonuts);
         numberOfDonuts.getSelectionModel().select(0);
 
+        doDonutType();
+
+        loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
+        root = loader.load();
+        mainViewController = loader.getController();
+
+    }
+
+    /**
+     * checks donut type selection
+     */
+    public void doDonutType(){
         chooseDonut.valueProperty().addListener((observable, oldValue, newValue) -> {
             donutType = (newValue.toString());
 
@@ -83,16 +97,12 @@ public class OrderingDonutsController{
                 donutListView.setItems(cakeFlavors);
             }
         });
-
-
-        loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
-        root = loader.load();
-        mainViewController = loader.getController();
-
     }
-    private ArrayList<String> addedToTheTempOrder = new ArrayList<String>();
-    @FXML TextField donutSubTotal;
 
+
+    /**
+     * adds selected donut + flavor to temp order
+     */
     @FXML public void addToTempOrder(){
         if(donutListView.getSelectionModel().getSelectedItem() == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -112,7 +122,11 @@ public class OrderingDonutsController{
         }
     }
 
-    @FXML public void removeFromTempOrder() throws IOException {
+
+    /**
+     * removes donut from temp order
+     */
+    @FXML public void removeFromTempOrder() {
         if(donutTempOrder.getSelectionModel().getSelectedItem() == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -143,16 +157,21 @@ public class OrderingDonutsController{
 
     }
 
+    /**
+     * sets main view controller
+     * @param mainView the main view controller to set to
+     */
     public void setMainController(MainViewController mainView){
         mainViewController = mainView;
     }
 
+    /**
+     * adds the donut order to basket
+     */
     @FXML public void addToBasket(){
         DonutOrder donutOrder = DonutOrder;
         mainViewController.addDonut(donutOrder);
     }
 
-    public DonutOrder getDonutOrder(){
-        return DonutOrder;
-    }
+
 }

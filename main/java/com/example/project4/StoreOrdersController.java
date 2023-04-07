@@ -11,9 +11,17 @@ import javafx.scene.control.TextField;
 import pkg.MenuItem;
 import pkg.Order;
 
+import java.text.DecimalFormat;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * controller for the store orders menu
+ * @author Hieu Nguyen, Shan Malik
+ */
 public class StoreOrdersController {
 
     @FXML
@@ -23,16 +31,17 @@ public class StoreOrdersController {
     @FXML
     private TextField totalAmount;
 
-
     MainViewController mainViewController;
     FXMLLoader loader;
     Parent root;
-
-
+    DecimalFormat numFormat = new DecimalFormat("0.00");
     private ArrayList<Integer> numbersForOrderNumberPicker = new ArrayList<Integer>();
-
     Order order;
 
+    /**
+     * initializes the menu
+     * @throws IOException throws error if file is not found
+     */
     @FXML
     public void initialize() throws IOException {
         totalAmount.setText("$0.00");
@@ -41,58 +50,22 @@ public class StoreOrdersController {
         root = loader.load();
         mainViewController = loader.getController();
 
-        //order = mainViewController.getOrder();
-      //  int numberOfOrders = order.getPastOrders().size();
-
-//        for(int i = 1; i < numberOfOrders + 1; i++){
-//            numbersForOrderNumberPicker.add(i);
-//        }
-
-
-     //   orderNumberPicker.setItems(FXCollections.observableArrayList((ArrayList<Integer>) numbersForOrderNumberPicker));
-
         orderNumberPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             storeOrderListView.getItems().clear();
 
-            String selectedOrderNumber = String.valueOf(newValue.intValue());
-
-            System.out.println("orderNumber: " + newValue);
-
-            ArrayList<String> viewingOrder = order.getPastOrderStrings(newValue);
-
-            System.out.println("orderNumber: " + newValue + " |||| " + viewingOrder);
-
-            storeOrderListView.setItems(FXCollections.observableArrayList(viewingOrder));
-
-            double tot = order.getPastOrderPrice(newValue);
-
-            System.out.print(tot);
-
-            totalAmount.setText(String.valueOf(tot));
-
-
+            if(newValue != null) {
+                ArrayList<String> viewingOrder = order.getPastOrderStrings(newValue);
+                storeOrderListView.setItems(FXCollections.observableArrayList(viewingOrder));
+                double tot = order.getPastOrderPrice(newValue);
+                System.out.print(tot);
+                totalAmount.setText(String.valueOf(tot));
+            }
         });
-
-
-
-
-        /* orderNumberPicker.setOnAction(event -> {
-            storeOrderListView.getItems().removeAll();
-            String selectedOrderNumber = String.valueOf(orderNumberPicker.getValue() - 1);
-            System.out.println(selectedOrderNumber);
-            // perform action here using the selectedOrderNumber
-            ArrayList<Order> temp = order.getPastOrders();
-            order = order.getPastOrders().get(Integer.parseInt(selectedOrderNumber));
-            System.out.println(order.toString());
-            order.printOrder();
-            storeOrderListView.setItems(FXCollections.observableArrayList(order.getOrderItemsStrings()));
-            totalAmount.setText(order.getOrderPrice()+"");
-        });*/
-
-
     }
 
-
+    /**
+     * sets the order numbers of the list
+     */
     public void setOrderNumbers(){
         order = mainViewController.getOrder();
         int numberOfOrders = order.getPastOrders().size();
@@ -101,25 +74,33 @@ public class StoreOrdersController {
             numbersForOrderNumberPicker.add(i);
         }
 
-
         orderNumberPicker.setItems(FXCollections.observableArrayList((ArrayList<Integer>) numbersForOrderNumberPicker));
-
 
     }
 
+    /**
+     * sets main view controller to a given main view
+     * @param mainView the main view to be set to
+     */
     public void setMainController(MainViewController mainView){
         mainViewController = mainView;
     }
 
+    /**
+     * cancels an order within the list
+     */
     @FXML
     public void cancelOrder(){
         if(orderNumberPicker.getValue() != null) {
+
             int selectedForRemove = orderNumberPicker.getSelectionModel().getSelectedItem();
             order.removePastOrder(selectedForRemove);
             ObservableList<Integer> items = orderNumberPicker.getItems();
             int itemToRemove = items.indexOf(selectedForRemove);
             items.remove(itemToRemove);
             orderNumberPicker.setValue(null);
+            totalAmount.setText("$0.00");
+
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -130,14 +111,36 @@ public class StoreOrdersController {
 
     }
 
+    /**
+     * exports orders as a txt file
+     */
     @FXML
     public void exportOrders(){
-        int numberOfOrder = order.getPastOrders().size();
-        for(int i = 0; i < numberOfOrder; i++){
-            order.exportOrder(i);
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter("exportedOrders.txt"));
+            int i = 0;
+            for(ArrayList<MenuItem> pastOrder: order.getPastOrders()){
+
+                String oNum = String.valueOf(order.getPastOrderNumber(i));
+                writer.write("Order Number: "+ oNum);
+                writer.newLine();
+
+                for(String menuItem : order.getPastOrderStrings(Integer.parseInt(oNum))){
+                    writer.write(menuItem);
+                    writer.newLine();
+                }
+                writer.newLine();
+
+                i++;
+            }
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }
+
+
 
 
 
