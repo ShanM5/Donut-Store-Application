@@ -134,7 +134,8 @@ public class OrderingDonutsController{
             alert.show();
         }else{
             String flavor = donutTempOrder.getSelectionModel().getSelectedItem().toString();
-            flavor = flavor.substring(0,flavor.length()-3);
+            int index = flavor.indexOf("(");
+            flavor = flavor.substring(0,index);
             String removedType = DonutOrder.getDonutType(new Donut(flavor));
             DonutOrder.removeDonut(new Donut(flavor));
 

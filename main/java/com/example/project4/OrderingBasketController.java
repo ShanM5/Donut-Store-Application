@@ -1,5 +1,3 @@
-
-
 package com.example.project4;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -12,7 +10,7 @@ import pkg.*;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
+import java.text.DecimalFormat;
 
 /**
  * Controller for the ordering basket menu
@@ -100,9 +98,6 @@ public class OrderingBasketController {
             if (ind.equals(item)) break;
             ret++;
         }
-        if (ret == 1) {
-            return ret - 1;
-        }
         return ret;
     }
 
@@ -133,9 +128,12 @@ public class OrderingBasketController {
         } else if (selectedIndex == 0 && orderBasketView.getItems().size() == 1) {
             order.deleteItem(0);
         } else if (orderBasketView.getSelectionModel().getSelectedItem() != null && orderBasketView.getItems().size() != 1.0) {
-            String removed = orderBasketView.getSelectionModel().getSelectedItem().toString();
-            int removeIndex = findItem(removed);
-            order.deleteItem((removeIndex));
+            int removeIndex = findItem(orderBasketView.getSelectionModel().getSelectedItem().toString());
+            if(removeIndex == 0){
+                order.deleteItem((removeIndex));
+            }else{
+                order.deleteItem((removeIndex)+1);
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -150,7 +148,6 @@ public class OrderingBasketController {
         subTotal.setText("$" + subtotal);
         totalAmount.setText("$" + total);
         salesTax.setText("$" + tax);
-
     }
 
 
@@ -166,7 +163,7 @@ public class OrderingBasketController {
 
         orderBasketView.setItems(FXCollections.observableArrayList(listViewString));
 
-DecimalFormat numFormat = new DecimalFormat("0.00");
+        DecimalFormat numFormat = new DecimalFormat("0.00");
 
         double subtotal = Double.parseDouble(numFormat.format(order.getOrderPrice()));
 

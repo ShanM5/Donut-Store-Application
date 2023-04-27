@@ -83,6 +83,7 @@ public class Order {
         orderNumber.remove(Integer.valueOf(input));
         pastOrders.remove(pastOrderIndex);
 
+
     }
 
 
@@ -158,5 +159,8 @@ public class Order {
         orderItems.remove(index);
 
     }
+
+
+
 
 }
